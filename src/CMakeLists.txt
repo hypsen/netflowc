@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
 
-find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Boost 1.70.0 REQUIRED system)
 find_package(Boost COMPONENTS program_options REQUIRED)
