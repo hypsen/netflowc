@@ -1,0 +1,39 @@
+dist: xenial
+sudo: required
+language: cpp
+os:
+  - linux
+
+compiler:
+  - gcc
+
+addons:
+      apt:
+          sources:
+            - sourceline: 'ppa:mhier/libboost-latest'
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+            - boost1.58
+      env:
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+
+before_script:
+- eval "${MATRIX_EVAL}"
+- sudo apt-get install cmake
+
+script:
+  - export CC=gcc-9
+  - export CXX=g++-9
+  - cd /home/travis/build/hypsen/netflowc
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
+  - cmake --build . --target package
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+    - curl -T netflowc-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uhypsen:$BINTRAY_API_KEY "https://api.bintray.com/content/hypsen/otus-cpp/netflowc/$TRAVIS_BUILD_NUMBER/netflowc-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
