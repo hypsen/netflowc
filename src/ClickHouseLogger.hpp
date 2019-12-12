@@ -22,11 +22,11 @@ private:
 public:
     ClickHouseLogger(std::string host, uint16_t port, std::string db, std::string username, std::string password, std::size_t queueSize) : 
         Logger(LoggerType::ClickHouse),
-	    db_(db),
-	    host_(host),
+        db_(db),
+        host_(host),
         port_(port),
-	    username_(username),
-	    password_(password),
+        username_(username),
+        password_(password),
         msgQueue_(queueSize),
         taskDone_(false),
         task_(&ClickHouseLogger::run, this)

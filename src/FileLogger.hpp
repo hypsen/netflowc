@@ -25,11 +25,11 @@ private:
     void writeToFile_(tm datetime, std::string);
 public:
     FileLogger(fs::path dir, uint8_t period, std::size_t queueSize) :
-	    Logger(LoggerType::File),
-        datetimePrevious_{0, 0, 0, 0, 0, period},
-        datetimeCurrent_{0, 0, 0, 0, 0, period},
-	    dir_(dir),
-	    period_(period),
+        Logger(LoggerType::File),
+        datetimePrevious_(period),
+        datetimeCurrent_(period),
+        dir_(dir),
+        period_(period),
         msgQueue_(queueSize),
         taskDone_(false),
         task_(&FileLogger::run, this)

@@ -20,14 +20,7 @@ void ClickHouseLogger::run()
                 auto seconds = static_cast<time_t>(datetime / 1000);
                 auto t = *localtime(&seconds);
 
-                return LogDateTime{
-                    .year = static_cast<uint16_t>(t.tm_year + 1900),
-                    .month = static_cast<uint8_t>(t.tm_mon + 1),
-                    .day = static_cast<uint8_t>(t.tm_mday),
-                    .hour = static_cast<uint8_t>(t.tm_hour),
-                    .minute = static_cast<uint8_t>(t.tm_min),
-                    .period = CLICKHOUSE_TABLE_ROTATE_PERIOD
-                };
+                return LogDateTime(t, CLICKHOUSE_TABLE_ROTATE_PERIOD);
             };
 
             auto getTableNameFromDateTime = [](LogDateTime& datetime) -> std::string {
