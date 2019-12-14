@@ -18,7 +18,7 @@ apt install netflowc_*version*.deb
 ```netflowc --port=2055 --stdout```
 
 ### JSON output with JQ
-```netflowc --port=2055 --stdout | jq -c '.'```
+```netflowc -r 2055 -o | jq -c '. | select (.IPV4_DST_ADDR == "8.8.8.8") | select(.L4_DST_PORT == 53)'```
 
 ### JSON output, write to directory
 ```netflowc --port=2055 --file --dir=/storage --period=10```
